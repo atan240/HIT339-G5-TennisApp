@@ -1,0 +1,14 @@
+﻿@model TennisApp2.Models.Coach
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Access Denied";
+    var usr = await UserManager.GetUserAsync(User);
+    var email = usr?.Email;
+}
+
+<h1>Access Denied</h1>
+<p>This page is only available to authorized users</p>

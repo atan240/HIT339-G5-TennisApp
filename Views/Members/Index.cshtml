@@ -1,0 +1,64 @@
+﻿@*@model IEnumerable<TennisApp2.Models.Member>*@
+@*@model List<IdentityUser>*@
+@model List<TennisApp2.ViewModels.UserRoleViewModel>
+
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>All Memberships</h1>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+    <a asp-action="Create">Create New</a>
+        </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Edit User Role Type</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var user in Model) {
+        <tr>                       
+                <td>@user.UserName</td>   
+                <td>
+                    @foreach (var role in user.Roles)
+                    {
+                        <span>@role</span>
+
+                        <br />
+                    }
+                </td>
+                <td>
+                    <form method="post" asp-action="UpdateRole">
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <select name="selectedRole" class="form-control">
+                            @foreach (var role in user.Roles)
+                            {
+                                <option value="Admin">Admin</option>
+                                <option value="Coach">Coach</option>
+                                <option value="Member">Member</option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </td>
+           @*<td>
+                <a asp-action="Edit" asp-route-id="@user.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@user.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+            </td>*@
+        </tr>
+}
+    </tbody>
+</table>

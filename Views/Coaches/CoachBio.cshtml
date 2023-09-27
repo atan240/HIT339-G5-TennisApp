@@ -1,0 +1,79 @@
+﻿@*Old Index.cs for Coach Biographies*@
+
+@model IEnumerable<TennisApp2.Models.Coach>
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Coach Biographies";
+}
+
+<h1>Coach Biographies</h1>
+
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Biography)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Expertise)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Accreditations)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    <img src="@item.Image" alt="Coach @item.UserName">
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Biography)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Expertise)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Accreditations)
+                </td>
+
+                <td>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Coach"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    }
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <p>|</p>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

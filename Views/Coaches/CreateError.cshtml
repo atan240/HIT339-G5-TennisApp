@@ -1,0 +1,17 @@
+﻿@model TennisApp2.Models.Coach
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Create Coach Error";
+    var usr = await UserManager.GetUserAsync(User);
+    var email = usr?.Email;
+}
+
+<h1>Create Coach Error</h1>
+<p>
+    Error: Coach must be a registered user and in the role of Coach. Please create account for user if one does not exist and contact the Administrator to set the user's role to "coach".
+</p>
+

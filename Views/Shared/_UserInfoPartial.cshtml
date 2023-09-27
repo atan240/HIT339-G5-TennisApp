@@ -1,0 +1,8 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <span>Logged In User ID: @ViewBag.LoggedInUserId</span>
+}
+else
+{
+    <span>Not Logged In</span>
+}
